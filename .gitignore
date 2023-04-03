@@ -2,3 +2,6 @@ test_v.mp4
 Bruno_ADND_projects.pdf
 .ipynb_checkpoints
 yolov7
+datasets
+runs
+yolov*.pt
