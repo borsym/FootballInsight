@@ -2,5 +2,7 @@ test_v.mp4
 .ipynb_checkpoints
 yolov7
 data
+datasets
 yolov*.*
 results
+runs
