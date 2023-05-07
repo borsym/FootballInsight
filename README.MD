@@ -60,7 +60,9 @@ Custom training becomes a viable option when the baseline YOLO models prove inef
 
 ---
 
-### **Baseline Model without Tracking:**
+![Conf0.1](resources/gifs/yolo8_obj_det_0.25_pre_trained.gif)
+
+### **Baseline Model:**
 
 I utilized **Ultralytics'** largest pre-trained model, *yolov8x.pt* as the baseline for my experiments. Two different confidence thresholds, **0.1** and **0.3**, were employed to assess the detection capability of YOLO for identifying the "sports ball" object. The original 720p resolution was maintained, and only the "person" and "sports ball" classes were considered for detection purposes.
 
@@ -97,8 +99,22 @@ TODO
 
 ---
 
-## 3. Object Detection + Object Tracking
+## 3. Object Tracking
 
-### No training:
+---
+### **ByteTrack:**
 
-### Custom training:
+ByteTrack incorporates a tracking-by-detection framework, where object detection is performed in each frame, and the detections are linked over time to form object tracks. To improve the tracking performance, ByteTrack employs a motion-guided feature aggregation technique that utilizes motion cues to refine the object features. This approach helps handle challenging scenarios where appearance alone may not be sufficient for accurate tracking. ByteTrack, with its default settings, falls slightly behind the performance of DeepSort, another popular object tracking algorithm.
+
+### **Baseline:**
+---
+
+![Conf0.1](resources/gifs/yolov8_bytetrack.gif)
+
+---
+
+### **Trained:**
+
+![Conf0.1](resources/gifs/yolov8_bytetrack_trained.gif)
+
+### **Deepsort:**
