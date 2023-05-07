@@ -2,17 +2,11 @@
 
 ### Computer vision based system to track the flow of football matches and create player-specific summaries. 
 
-## Demo
-
-![Result](resources/gifs/end.gif)
-
----
-
 ## Computer Vision Tasks Used:
 
-- **Object Detection**: YOLO
+- **Object Detection**: YOLOv8
 - **Object Tracking**: ByteTrack, Deepsort
-- **Pose Estimation**: YOLO
+- **Pose Estimation**: YOLOv8-Pose
 
 ## Dataset:
 
@@ -106,15 +100,28 @@ TODO
 
 ByteTrack incorporates a tracking-by-detection framework, where object detection is performed in each frame, and the detections are linked over time to form object tracks. To improve the tracking performance, ByteTrack employs a motion-guided feature aggregation technique that utilizes motion cues to refine the object features. This approach helps handle challenging scenarios where appearance alone may not be sufficient for accurate tracking. ByteTrack, with its default settings, falls slightly behind the performance of DeepSort, another popular object tracking algorithm.
 
-### **Baseline:**
+### **Baseline: Confidence = 0.3**
 ---
 
 ![Conf0.1](resources/gifs/yolov8_bytetrack.gif)
 
 ---
 
-### **Trained:**
+### **Trained: Confidence = 0.3**
 
 ![Conf0.1](resources/gifs/yolov8_bytetrack_trained.gif)
 
 ### **Deepsort:**
+
+Deepsort performs robust and accurate multi-object tracking in videos. DeepSORT leverages deep neural networks to extract appearance features and similarity metrics to associate detections across frames. It employs Kalman filtering for state estimation and data association to maintain track consistency. DeepSORT is capable of handling occlusions, target appearance variations, and tracking in crowded scenes. It has proven effective in various applications, including pedestrian tracking, vehicle tracking, and surveillance systems. The current pre-trained model performs exceptionally well on our dataset, even with a higher confidence threshold. However, there is room for further improvement in the DeepSort algorithm's parameters.
+
+### **Baseline: Confidence = 0.3**
+---
+
+![Conf0.1](resources/gifs/yolov8_deepsort_0.3.gif)
+
+---
+
+### **Trained: Confidence = 0.55**
+
+![Conf0.1](resources/gifs/yolov8_deepsort_trained_0.5.gif)
