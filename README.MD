@@ -87,11 +87,15 @@ Pose estimation is a new feature of yolo8 that has just come out recently. It ha
 
 ![Conf0.1](resources/gifs/yolo8_pose_0.01.gif)
 
-### **Baseline Model with Action Prediction:**
+### **Trained Model with Action Prediction:**
 
-TODO
+Human pose estimation from a large range is a challenging task, especially when dealing with small silhouettes of players in low-quality videos, such as those with resolutions of 720p or below. In some cases, a player can be represented by only 32x64 pixels, which is insufficient for accurate pose estimation. To improve the algorithm's performance, it is essential to either opt for higher-quality videos or use upscaling techniques. For predicting player movements, I utilized a pre-trained model with a 1080p video, resulting in more accurate results.
 
 ---
+
+### **Confidence = 0.01:**
+
+![Conf0.1](resources/gifs/yolov8_human_pose_trained.gif)
 
 ## 3. Object Tracking
 
