@@ -97,6 +97,12 @@ Human pose estimation from a large range is a challenging task, especially when 
 
 ![Conf0.1](resources/gifs/yolov8_human_pose_trained.gif)
 
+---
+
+## **Metrabs with the largest model available:**
+
+![Conf0.1](resources/images/metrabs.jpg)
+
 ## 3. Object Tracking
 
 ---
