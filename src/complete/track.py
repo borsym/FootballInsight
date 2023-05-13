@@ -41,6 +41,18 @@ from yolov8.ultralytics.yolo.utils.plotting import Annotator, colors, save_one_b
 
 from trackers.multi_tracker_zoo import create_tracker
 
+# For XMem
+from inference.data.test_datasets import LongTestDataset, DAVISTestDataset, YouTubeVOSTestDataset
+from inference.data.mask_mapper import MaskMapper
+from model.network import XMem
+from inference.inference_core import InferenceCore
+from inference.interact.interactive_utils import image_to_torch, index_numpy_to_one_hot_torch, torch_prob_to_numpy_mask, overlay_davis
+from PIL import Image
+
+#For SAM
+from segment_anything import sam_model_registry, SamPredictor
+
+
 
 @torch.no_grad()
 def run(
@@ -198,7 +210,7 @@ def run(
             if hasattr(tracker_list[i], 'tracker') and hasattr(tracker_list[i].tracker, 'camera_update'):
                 if prev_frames[i] is not None and curr_frames[i] is not None:  # camera motion compensation
                     tracker_list[i].tracker.camera_update(prev_frames[i], curr_frames[i])
-
+            
             if det is not None and len(det):
                 if is_seg:
                     shape = im0.shape
@@ -314,6 +326,10 @@ def run(
 
 def parse_opt():
     parser = argparse.ArgumentParser()
+    # parser.add_argument('--xmem-weights', nargs='+', type=Path, default='XMem.pth', help='Xmem weight path(s)')
+    # parser.add_argument('--sam-weights', nargs='+', type=Path, default='sam_vit_h_4b8939.pth.pth', help='SAM weight path(s)')
+    # parser.add_argument('--sam-m-type', type=Path, default='vit_h', help='SAM model type')
+    
     parser.add_argument('--yolo-weights', nargs='+', type=Path, default=WEIGHTS / 'yolov8s-seg.pt', help='model.pt path(s)')
     parser.add_argument('--reid-weights', type=Path, default=WEIGHTS / 'lmbn_n_cuhk03_d.pt')
     parser.add_argument('--tracking-method', type=str, default='deepocsort', help='deepocsort, botsort, strongsort, ocsort, bytetrack')
@@ -355,9 +371,47 @@ def parse_opt():
     return opt
 
 
+def setup_XMEM(device="cuda", XMem_weight='./saves/XMem.pth'):
+    torch.set_grad_enabled(False)
+
+    config = {
+        'top_k': 30,
+        'mem_every': 5,
+        'deep_update_every': -1,
+        'enable_long_term': True,
+        'enable_long_term_count_usage': True,
+        'num_prototypes': 128,
+        'min_mid_term_frames': 5,
+        'max_mid_term_frames': 10,
+        'max_long_term_elements': 10000,
+    }
+
+    network = XMem(config, XMem_weight).eval().to(device)
+    return network
+
+def convert_mask_to_np_array(mask_name):
+    mask = np.array(Image.open(mask_name))
+    unique_mask = np.unique(mask)
+    num_objects = len(np.unique(mask)) - 1
+    
+    return mask, unique_mask, num_objects
+
+def setup_SAM(weight="sam_vit_h_4b8939.pth", model_type="vit_h", device="cuda"):
+    sys.path.append("..")
+
+    sam_checkpoint = weight
+    sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
+    sam.to(device=device)
+
+    predictor = SamPredictor(sam)
+
+    return predictor
+
 def main(opt):
     check_requirements(requirements=ROOT / 'requirements.txt', exclude=('tensorboard', 'thop'))
     run(**vars(opt))
+
+
 
 
 if __name__ == "__main__":
