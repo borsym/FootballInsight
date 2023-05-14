@@ -103,6 +103,21 @@ Human pose estimation from a large range is a challenging task, especially when 
 
 ![Conf0.1](resources/images/metrabs.jpg)
 
+---
+
+## **Action Prediction:**
+
+Predicting actions accurately without sufficient data and resources is a formidable challenge. Several approaches can be considered to address this issue. A highly sophisticated solution involves training a Convolutional Neural Network (CNN) on the region of interest (ROI) containing players, extracting deep features of each player, and analyzing their poses in specific situations. However, this approach is resource-intensive and time-consuming. Another approach involves manually labeling all frames in the inference data, annotating the actions performed by each player using keypoint information. Although effective, this method is also laborious and costly.
+
+Alternatively, an easier and faster but less reliable approach is to employ pre-defined rules that define running, kicking, or standing actions based on joint distances and angles. This rule-based approach allows for quick inference but is prone to errors. Despite its limitations, this method offers a practical solution when the model's performance is suboptimal, especially when dealing with camera distances that pose additional challenges.
+
+A straightforward method to determine if a player is running involves examining the distance between their knees and observing the swinging motion of their arms. For instance, a significant angle between the palms and shoulders on one side indicates arm movement while running. To identify a kicking action, one can examine the angle between the player's hips and feet. If this angle is large, it is likely that the player is kicking. However, it's important to note that this approach does not account for actions like tackling or heading. Despite this limitation, the method serves as a quick and basic way to differentiate between running, kicking, and standing actions, or to identify when a player is preparing to perform a specific action.
+## Results using hard-coded thresholds:
+
+![Conf0.1](resources/images/AP.jpg)
+
+---
+
 ## 3. Object Tracking
 
 ---
