@@ -44,7 +44,7 @@ The second approach involved providing the (x,y) position for the ball, and SAM 
 
 The third approach involved providing the bounding box coordinates for the ball (x1,y1,x2,y2), and SAM segmented the ball inside it. Out of the three approaches, I used the third approach, where I merged SAM+XMem and had to use YOLO to detect the ball. After the ball was detected, I could use the bounding box coordinates to proceed.
 
-- **Object Segmentation**:
+## 2. Object Segmentation
 ---
 ### **SAM:**
 
