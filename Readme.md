@@ -64,7 +64,6 @@ Using accurate segmentation was crucial because it allowed me to track the objec
 
 RAFT (Real-time All-frame Tracker) is for object tracking that uses an optical flow estimation approach. It is known for its robustness and accuracy in tracking objects in challenging video sequences, such as those with occlusions and fast motion. RAFT is designed to operate in real-time, making it suitable for a wide range of applications, including autonomous driving, surveillance, and robotics. UniMatch is built top of the RAFT its a Transformer-based model.
 
-![UniMatch_Demo](resources/images/unimatch.png)
 
 #### **Result:**
 
